@@ -3,6 +3,7 @@ import React from 'react';
 import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 // import logo from './assets/logo.png';
 import * as ImagePicker from 'expo-image-picker';
+import * as Sharing from 'expo-sharing';
 
 export default function App() {
   const [selectedImage, setSelectedImage] = React.useState(null);
@@ -16,21 +17,34 @@ export default function App() {
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    // console.log(pickerResult);
+    // console.log(pickerResult); *this one got something it's from original code
 
     if (pickerResult.cancelled === true) {
       return;
     }
-    
+
     setSelectedImage ({ localUri: pickerResult.uri });
-    console.log(selectedImage);
+    // console.log(selectedImage); *this one from mine and I do-n't understand
   }
 
-  // if (selectedImage !== null) {
-  //   return (
+  let openShareDialogAsync = async () => {
+    if (!(await Sharing.isAvailableAsync())) {
+      alert("Uh oh, sharing isn't available on your platform");
+      return ;
+    }
 
-  //   )
-  // }
+    await Sharing.shareAsync(selectedImage.localUri);
+  }
+  if (selectedImage !== null) {
+    return (
+      <View style={styles.container}>
+        <Image source={{ uri: selectedImage.localUri }} style={styles.thumbnail} />
+        <TouchableOpacity onPress={openShareDialogAsync} style={styles.button}>
+          <Text style={styles.buttonText}>Share this photo</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -74,4 +88,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#fff',
   },
+  thumbnail: {
+    width: 300,
+    height: 300,
+    resizeMode: "contain"
+  }
 });
