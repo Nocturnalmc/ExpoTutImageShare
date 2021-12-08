@@ -4,6 +4,7 @@ import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-na
 // import logo from './assets/logo.png';
 import * as ImagePicker from 'expo-image-picker';
 import * as Sharing from 'expo-sharing';
+import uploadToAnonymousFilesAsync from 'anonymous-files';
 
 export default function App() {
   const [selectedImage, setSelectedImage] = React.useState(null);
@@ -17,26 +18,30 @@ export default function App() {
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    // console.log(pickerResult); *this one got something it's from original code
-
+    // console.log(pickerResult);
     if (pickerResult.cancelled === true) {
       return;
     }
 
-    setSelectedImage ({ localUri: pickerResult.uri });
-    // console.log(selectedImage); *this one from mine and I do-n't understand
+    // setSelectedImage ({ localUri: pickerResult.uri });
+    if (Platform.OS === 'web') {
+      let remoteUri = await uploadAnonymousFileAsync(pickerResult.uri)
+      setSelectedImage({ localUri: pickerResult.uri, remoteUri });
+    } else {
+      setSelectedImage({ localUri: pickerResult.uri, remoteUri: null });
+    }
   }
 
   let openShareDialogAsync = async () => {
     if (!(await Sharing.isAvailableAsync())) {
-      alert("Uh oh, sharing isn't available on your platform");
+      alert("The image is available for sharing at : ${selectedImage.remoteUri}");
       return ;
     }
 
     await Sharing.shareAsync(selectedImage.localUri);
   }
   if (selectedImage !== null) {
-    return (
+    return ( // run second
       <View style={styles.container}>
         <Image source={{ uri: selectedImage.localUri }} style={styles.thumbnail} />
         <TouchableOpacity onPress={openShareDialogAsync} style={styles.button}>
@@ -46,7 +51,7 @@ export default function App() {
     )
   }
 
-  return (
+  return ( // run first
     <View style={styles.container}>
       <Image source={{uri: "https://i.imgur.com/TkIrScD.png"}} style={styles.logo} />
       <Text style={styles.instruction}>
