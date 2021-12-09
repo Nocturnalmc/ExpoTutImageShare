@@ -25,7 +25,7 @@ export default function App() {
 
     // setSelectedImage ({ localUri: pickerResult.uri });
     if (Platform.OS === 'web') {
-      let remoteUri = await uploadAnonymousFileAsync(pickerResult.uri)
+      let remoteUri = await uploadToAnonymousFilesAsync(pickerResult.uri)
       setSelectedImage({ localUri: pickerResult.uri, remoteUri });
     } else {
       setSelectedImage({ localUri: pickerResult.uri, remoteUri: null });
