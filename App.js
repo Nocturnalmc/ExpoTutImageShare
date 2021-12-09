@@ -6,6 +6,12 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Sharing from 'expo-sharing';
 import uploadToAnonymousFilesAsync from 'anonymous-files';
 
+// please remove this splash screen later
+import * as SplashScreen from 'expo-splash-screen';
+SplashScreen.preventAutoHideAsync();
+setTimeout(SplashScreen.hideAsync, 5000);
+// please remove this splash screen later
+
 export default function App() {
   const [selectedImage, setSelectedImage] = React.useState(null);
 
