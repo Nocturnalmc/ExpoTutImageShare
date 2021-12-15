@@ -61,8 +61,10 @@ export default function App() {
         <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
   	      <Text style={styles.buttonText}>Re-select photo</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => {setSelectedImage(selectedImage=null)}} >
+          <Text style={styles.buttonText}>Return to main page</Text>
+        </TouchableOpacity>
       </View>
-//      <TouchableOpacity onPress={ () => { setSelectedImage(selectedImage=null}};
     )
   }
 
