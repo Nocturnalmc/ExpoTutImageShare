@@ -1,19 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-// import logo from './assets/logo.png';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View }
+from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Sharing from 'expo-sharing';
 import uploadToAnonymousFilesAsync from 'anonymous-files';
 
-// please remove this splash screen later
-import * as SplashScreen from 'expo-splash-screen';
-SplashScreen.preventAutoHideAsync();
-setTimeout(SplashScreen.hideAsync, 5000);
-// please remove this splash screen later
+//please remove this splash screen later
+//import * as SplashScreen from 'expo-splash-screen';
+//SplashScreen.preventAutoHideAsync();
+//setTimeout(SplashScreen.hideAsync, 5000);
+//please remove this splash screen later
 
 export default function App() {
-  const [selectedImage, setSelectedImage] = React.useState(null);
+  let [selectedImage, setSelectedImage] = React.useState(null);
 
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -24,12 +30,11 @@ export default function App() {
     }
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    // console.log(pickerResult);
+
     if (pickerResult.cancelled === true) {
       return;
     }
 
-    // setSelectedImage ({ localUri: pickerResult.uri });
     if (Platform.OS === 'web') {
       let remoteUri = await uploadToAnonymousFilesAsync(pickerResult.uri)
       setSelectedImage({ localUri: pickerResult.uri, remoteUri });
@@ -47,17 +52,21 @@ export default function App() {
     await Sharing.shareAsync(selectedImage.localUri);
   }
   if (selectedImage !== null) {
-    return ( // run second
+    return ( // second page
       <View style={styles.container}>
         <Image source={{ uri: selectedImage.localUri }} style={styles.thumbnail} />
         <TouchableOpacity onPress={openShareDialogAsync} style={styles.button}>
           <Text style={styles.buttonText}>Share this photo</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
+  	      <Text style={styles.buttonText}>Re-select photo</Text>
+        </TouchableOpacity>
       </View>
+//      <TouchableOpacity onPress={ () => { setSelectedImage(selectedImage=null}};
     )
   }
 
-  return ( // run first
+  return ( // first page
     <View style={styles.container}>
       <Image source={{uri: "https://i.imgur.com/TkIrScD.png"}} style={styles.logo} />
       <Text style={styles.instruction}>
@@ -74,7 +83,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'cyan',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -94,6 +103,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
     borderRadius: 5,
     padding: 20,
+		marginBottom: 10,
   },
   buttonText: {
     fontSize: 20,
