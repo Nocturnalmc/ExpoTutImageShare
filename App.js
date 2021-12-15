@@ -54,6 +54,7 @@ export default function App() {
   if (selectedImage !== null) {
     return ( // second page
       <View style={styles.container}>
+      	<StatusBar style='auto' />
         <Image source={{ uri: selectedImage.localUri }} style={styles.thumbnail} />
         <TouchableOpacity onPress={openShareDialogAsync} style={styles.button}>
           <Text style={styles.buttonText}>Share this photo</Text>
@@ -61,7 +62,7 @@ export default function App() {
         <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
   	      <Text style={styles.buttonText}>Re-select photo</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {setSelectedImage(selectedImage=null)}} >
+        <TouchableOpacity onPress={() => {setSelectedImage(selectedImage=null)}} style={styles.button} >
           <Text style={styles.buttonText}>Return to main page</Text>
         </TouchableOpacity>
       </View>
@@ -70,11 +71,11 @@ export default function App() {
 
   return ( // first page
     <View style={styles.container}>
+	    <StatusBar style='auto' />
       <Image source={{uri: "https://i.imgur.com/TkIrScD.png"}} style={styles.logo} />
       <Text style={styles.instruction}>
         To share a photo from your phone with a friend, just press the button below !
       </Text>
-      <StatusBar style='auto' />
       <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
         <Text style={styles.buttonText}>Pick a photo</Text>
       </TouchableOpacity>
