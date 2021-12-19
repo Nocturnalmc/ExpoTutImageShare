@@ -72,7 +72,11 @@ export default function App() {
   return ( // first page
     <View style={styles.container}>
 	    <StatusBar style='auto' />
-      <Image source={{uri: "https://i.imgur.com/TkIrScD.png"}} style={styles.logo} />
+      <View style={styles.logoContainer}>
+      	<Text style={styles.logo}>
+      		🌄
+      	</Text>
+      </View>
       <Text style={styles.instruction}>
         To share a photo from your phone with a friend, just press the button below !
       </Text>
@@ -90,10 +94,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  logo: {
+  logoContainer: {
     width: 305,
     height: 159,
+    alignItems: 'center',
     marginBottom: 10,
+  },
+  logo: {
+		fontSize: 150,
   },
   instruction: {
     color: '#888',
