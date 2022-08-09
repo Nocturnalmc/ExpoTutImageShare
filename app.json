@@ -1,5 +1,6 @@
 {
   "expo": {
+    "owner": "nocturnalmc",
     "name": "ExpoTutImageShare",
     "slug": "ExpoTutImageShare",
     "version": "1.0.0",
@@ -11,7 +12,8 @@
       "backgroundColor": "#000000"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/d2ce020c-eeb7-45af-aa5e-170f8e1e4142"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -23,10 +25,14 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.nocturnalmc.ExpoTutImageShare"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }
